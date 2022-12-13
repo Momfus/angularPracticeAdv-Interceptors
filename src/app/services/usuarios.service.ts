@@ -21,16 +21,16 @@ export class UsuariosService {
     params = params.append('nombre', 'Momfus Arboleo');
 
     // Armar headers
-    const headers = new HttpHeaders({
+    // const headers = new HttpHeaders({
 
-      'token-usuario': 'ABC12309049asdasd' // Prueba de headers
+    //   'token-usuario': 'ABC12309049asdasd' // Prueba de headers
 
-    });
+    // });
 
-    return this.http.get('https://reqres123.in/api/user', { // Endpoint de prueba // El colocado es de prueba, el correcto es: 'https://reqres.in/api/user'
+    return this.http.get('https://reqres.in/api/user', { // Endpoint de prueba
 
       params, // Idem que params: params
-      headers
+      // headers
 
     }).pipe(
       map( (res:any) => res['data'] ),
