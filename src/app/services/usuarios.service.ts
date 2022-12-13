@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { catchError, map } from "rxjs/operators";
 import { throwError } from 'rxjs';
@@ -34,19 +34,21 @@ export class UsuariosService {
 
     }).pipe(
       map( (res:any) => res['data'] ),
-      catchError( err => { // Parecido al map pero usado especificamente para capturar error
-
-        console.log('Sucedio un error');
-        console.log('Registrado en el log file');
-        console.warn(err);
-
-        return throwError( () =>{ // Se puede manejar desde donde se llama el servicio (y este no aparecería)
-          return 'Error personalizado';
-        });
-
-      })
+      catchError(  this.manejarError ) // Por defecto le envia el error como argumento sino se usa una función flecha y se coloca como argumento
     );
 
+  }
+
+
+  manejarError( error: HttpErrorResponse ) {
+
+    console.log('Sucedio un error');
+    console.log('Registrado en el log file');
+    console.warn(error);
+
+    return throwError( () =>{ // Se puede manejar desde donde se llama el servicio (y este no aparecería)
+      return 'Error personalizado';
+    });
   }
 
 }
